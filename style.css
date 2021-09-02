@@ -1,0 +1,353 @@
+*{
+	margin: 0;
+	padding: 0;
+	font-family: 'Segoe UI';
+	box-sizing: border-box;
+	position: relative;
+}
+body{
+	height: 100vh;
+	background: #111;
+	display: flex;
+}
+button{
+	border: none;
+}
+button:focus-visible{
+	outline: .3px solid #fff;
+}
+[disabled]{
+	opacity: .5;
+}
+
+
+
+.viewer{
+	width: calc(100% - 400px);
+	height: 100vh;
+	background: #222;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	user-select: none;
+}
+.viewer .main{
+	width: 100%;
+	height: calc(100% - 40px);
+	display: flex;
+	overflow: hidden;
+}
+.viewer .main .scene{
+	width: 100%;
+	height: 100%;
+	/* cursor: move; */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: auto;
+	overflow: hidden;
+}
+.viewer .main .pos{
+	position: fixed;
+	z-index: 1;
+	top: 10px;
+	left: 10px;
+	color: #fff;
+}
+
+
+
+.viewer .main .scene .ground{
+	width: 500px;
+	height: 500px;
+	background: url('./a.svg') 0 0 / calc(30px - 0.7px);
+	position: absolute;
+	transform-style: preserve-3d;
+	transform: perspective(1000px) rotateX(50deg);
+}
+
+.viewer .main .scene .ground .pointer,
+.viewer .main .scene .ground .pointer::after{
+	width: 15px;
+	height: 15px;
+	border: 2px solid #ff7300;
+	position: absolute;
+	pointer-events: none;
+	border-radius: 50%;
+}
+.viewer .main .scene .ground .pointer{
+	transform-style: preserve-3d;
+	transform: translate(-50%,-50%) rotateX(0deg);
+}
+.viewer .main .scene .ground .pointer::after{
+	content: '';
+	transform: translate(-25%,-25%)  rotateX(90deg);
+}
+.viewer .main .scene .ground .pointer::before{
+	content: '';
+	width: 3px;
+	height: 40px;
+	background: #ffc400;
+	position: absolute;
+	transform: translate3d(3px,-15px,20px) rotateX(90deg) rotateY(45deg);
+	z-index: 9;
+}
+
+/* Cube */
+
+.viewer .main .scene .ground .cube{
+	width: 80px;
+	height: 80px;
+	transform-style: preserve-3d;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transform: translate3d(calc(250px - 40px),calc(250px - 40px),50px);
+}
+.viewer .main .scene .ground .cube.active *{
+	outline: 1px solid #caca00
+}
+.viewer .main .scene .ground .cube .face{
+	position: absolute;
+	width: 80px;
+	height: 80px;
+	background: linear-gradient(#444,#555);
+}
+.viewer .main .scene .ground .cube .face.top{
+	transform: translate3d(0,0,40px);
+}
+.viewer .main .scene .ground .cube .face.bottom{
+	transform: translate3d(0,0,-40px);
+}
+.viewer .main .scene .ground .cube .face.right{
+	transform: rotateY(-90deg) translate3d(0,0,-40px);
+}
+.viewer .main .scene .ground .cube .face.left{
+	transform: rotateY(90deg) translate3d(0,0,-40px);
+}
+.viewer .main .scene .ground .cube .face.front{
+	transform: rotateX(90deg) translate3d(0,0,-40px);
+}
+.viewer .main .scene .ground .cube .face.back{
+	transform: rotateX(-90deg) translate3d(0,0,-40px);
+}
+
+
+
+
+
+
+
+.viewer .details{
+	width: 100%;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	background: #111;
+	color: #fff;
+	font-size: 13px;
+	padding: 0 5px;
+	user-select: none;
+}
+.viewer .details .options{
+	margin-left: 5px;
+	height: 90%;
+	display: flex;
+	align-items: center;
+	overflow: auto;
+}
+.viewer .details .options::-webkit-scrollbar{
+	appearance: none;
+	height: 0;
+}
+.viewer .details label{
+	height: 80%;
+	min-width: max-content;
+	padding: 2px 5px;
+	margin: 0 5px;
+	background: linear-gradient(#000,#333 30%);
+	margin-left: 10px;
+	display: flex;
+	align-items: center;
+	border-radius: 3px;
+	box-shadow: 0 0 5px 1px #0005;
+}
+.viewer .details label input{
+	width: 80px;
+	height: 100%;
+	border: none;
+	outline: none;
+	background: #222;
+	color: #fff;
+	margin-left: 5px;
+	padding: 0 5px;
+}
+
+
+.controls{
+	width: 400px;
+	height: 100vh;
+	background: #333;
+	display: flex;
+	flex-direction: column;
+	padding: 5px;
+}
+.panel{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	border: 1px solid #fff4;
+	box-shadow: 0 0 2px #000;
+	background: #fff2;
+	border-radius: 3px;
+	margin: 3px 0;
+	overflow: hidden;
+	transition: .3s;
+	user-select: none;
+}
+.panel .title{
+	width: 100%;
+	height: 30px;
+	padding: 3px 10px;
+	background: #333;
+	color: #fff;
+	display: flex;
+	justify-content: space-between;
+}
+.panel .title .btns{
+	height: 100%;
+	display: flex;
+}
+.panel .title button{
+	width: 25px;
+	background: #0000;
+	border: none;
+	color: #fff;
+	margin-left: 5px;
+}
+.panel .title button:hover{
+	background: #fff4;
+}
+.panel.hidden{
+	height: 33px;
+}
+.panel.hidden .title .close{
+	transform: rotate(180deg);
+}
+.panel.hidden .wrapper{
+	display: none;
+}
+
+.items .wrapper{
+	width: 100%;
+	height: calc(100% - 30px);
+	display: flex;
+	flex-direction: column;
+	padding: 5px;
+	overflow: hidden auto;
+}
+.items .wrapper .item{
+	width: 100%;
+	height: 30px;
+	background: #fff1;
+	margin: 3px 0;
+	display: flex;
+	align-items: center;
+	padding-left: 10px;
+	color: #fff;
+	border: 1px solid #0000;
+}
+.items .wrapper .item:hover{
+	background: #fff3;
+}
+.items .wrapper .item.active{
+	background: #808080;
+	border: 1px solid #fff9;
+}
+.items .wrapper .item span{
+	width: 100%;
+	height: 27px;
+	line-height: 27px;
+	overflow: hidden;
+}
+.items .wrapper .item button{
+	min-width: 30px;
+	height: 30px;
+	background: #0000;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+}
+.items .wrapper .item button:hover{
+	background: #fff3;
+}
+.items .btn{
+	width: 100%;
+	display: flex;
+	padding: 3px;
+}
+.items .btn button{
+	width: 100%;
+	padding: 6px;
+	border: none;
+	background: #444;
+	color: #fff;
+}
+.items .btn button:hover{
+	background: #fff3;
+}
+.properties .wrapper{
+	display: flex;
+	flex-direction: column;
+	overflow: auto;
+	padding: 5px;
+	margin-top: 5px;
+}
+.properties .wrapper .line{
+	width: 100%;
+	padding: 5px;
+	color: #fff;
+	display: flex;
+	flex-direction: column;
+	border-bottom: 1px solid #fff5;
+}
+.properties .wrapper .line .txt{
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+.properties .wrapper .line .range{
+	width: 100%;
+	display: flex;
+	margin: 10px 0;
+}
+.properties .wrapper .line .range input{
+	width: 100%;
+	appearance: none;
+	background: #eee;
+	height: 5px;
+	outline: none;
+}
+.properties .wrapper .line .range input::-webkit-slider-thumb{
+	appearance: none;
+	width: 15px;
+	height: 15px;
+	background: #8d8a8a;
+	border-radius: 50%;
+}
+.properties .wrapper .line .range input:focus-visible{
+	box-shadow: 0 0 2px 2px #00b7ffb2;
+}
+
+
+
+
+/* 
+.controls.item .items{
+	height: 35px;
+}
+.controls.item .items .wrapper,
+.controls.item .items .btn{
+	display: none;
+} */

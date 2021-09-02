@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CSS 3D MAKER</title>
+	<link rel="stylesheet" href="./all.css">
+	<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+	<div class="viewer">
+		<div class="main">
+			<div class="pos">User Perspective</div>
+			<div class="scene">
+				<div class="ground">
+					<div class="cube" id="cube1">
+						<div class="face top"></div>
+						<div class="face bottom"></div>
+						<div class="face left"></div>
+						<div class="face right"></div>
+						<div class="face front"></div>
+						<div class="face back"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="details">
+			<i class="fas fa-cube" style="margin-right: 5px;"></i> Camera:
+			<div class="options">
+				<label>Perspective <input type="number" id="per" value="10" min="1" max="20"></label>
+				<label>Rotate X <input type="number" id="rx" min="0" max="359" value="50"></label>
+				<!-- <label>Rotate Y <input type="number" id="ry" min="0" max="359" value="0"></label> -->
+				<label>Rotate Z <input type="number" id="rz" min="0" max="359" value="0"></label>
+			</div>
+		</div>
+	</div>
+	<div class="controls">
+		<div class="panel items">
+			<div class="title">
+				Scene 
+				<div class="btns">
+					<button class="fas fa-plus-circle" title="Create Item" id="new_btn"></button>
+					<button class="fas fa-folder" title="New Parent" disabled></button>
+					<button class="fas fa-angle-down close"></button>
+				</div>
+			</div>
+			<div class="wrapper"></div>
+		</div>
+		<div class="panel properties">
+			<div class="title">
+				<span>Properties: <span></span></span>
+				<div class="btns">
+					<button class="fas fa-angle-down close"></button>
+				</div>
+			</div>
+			<div class="wrapper">
+				<div class="line">
+					<div class="txt">
+						<span>Rotate X</span>
+						<span>360deg</span>
+					</div>
+					<div class="range">
+						<input type="range" name="" id="">
+					</div>
+				</div>
+				<div class="line">
+					<div class="txt">
+						<span>Rotate X</span>
+						<span>360deg</span>
+					</div>0
+					<div class="range">
+						<input type="range" name="" id="" disabled>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="./app.js"></script>
+</html>
